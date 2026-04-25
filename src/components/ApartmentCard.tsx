@@ -26,7 +26,7 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
       className="group bg-card rounded-2xl overflow-hidden shadow-soft card-lift hover:[&]:card-lift-hover border border-border/60"
       style={{ animation: "var(--animate-fade-up)" }}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+      <Link to="/apartments/$id" params={{ id: apt.id }} className="block relative aspect-[4/3] overflow-hidden bg-muted">
         <video
           ref={ref}
           src={apt.video}
@@ -42,9 +42,11 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
         {!hover && (
           <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent pointer-events-none" />
         )}
-      </div>
+      </Link>
       <div className="p-6">
-        <h3 className="font-display text-xl font-bold text-foreground">{apt.name}</h3>
+        <Link to="/apartments/$id" params={{ id: apt.id }} className="block">
+          <h3 className="font-display text-xl font-bold text-foreground hover:text-gold transition-colors">{apt.name}</h3>
+        </Link>
         <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{apt.description}</p>
         <div className="flex flex-wrap gap-3 mt-5 text-xs text-foreground/70">
           <span className="inline-flex items-center gap-1.5"><BedDouble className="w-4 h-4 text-gold" />{apt.bedrooms} BR</span>
@@ -54,7 +56,14 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
             <span className="inline-flex items-center gap-1.5"><Waves className="w-4 h-4 text-gold" />Pool</span>
           )}
         </div>
-        <div className="mt-6">
+        <div className="mt-6 flex flex-col gap-2">
+          <Link
+            to="/apartments/$id"
+            params={{ id: apt.id }}
+            className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-4 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition"
+          >
+            View details & amenities
+          </Link>
           <a
             href={buildWhatsAppLink({ apartment: apt.name, location: apt.location })}
             target="_blank"
