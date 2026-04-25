@@ -14,6 +14,7 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ApartmentsRouteImport } from './routes/apartments'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApartmentsIdRouteImport } from './routes/apartments.$id'
 
 const LocationsRoute = LocationsRouteImport.update({
   id: '/locations',
@@ -40,40 +41,67 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApartmentsIdRoute = ApartmentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApartmentsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/apartments': typeof ApartmentsRoute
+  '/apartments': typeof ApartmentsRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/locations': typeof LocationsRoute
+  '/apartments/$id': typeof ApartmentsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/apartments': typeof ApartmentsRoute
+  '/apartments': typeof ApartmentsRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/locations': typeof LocationsRoute
+  '/apartments/$id': typeof ApartmentsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/apartments': typeof ApartmentsRoute
+  '/apartments': typeof ApartmentsRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/locations': typeof LocationsRoute
+  '/apartments/$id': typeof ApartmentsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/apartments' | '/contact' | '/gallery' | '/locations'
+  fullPaths:
+    | '/'
+    | '/apartments'
+    | '/contact'
+    | '/gallery'
+    | '/locations'
+    | '/apartments/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/apartments' | '/contact' | '/gallery' | '/locations'
-  id: '__root__' | '/' | '/apartments' | '/contact' | '/gallery' | '/locations'
+  to:
+    | '/'
+    | '/apartments'
+    | '/contact'
+    | '/gallery'
+    | '/locations'
+    | '/apartments/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/apartments'
+    | '/contact'
+    | '/gallery'
+    | '/locations'
+    | '/apartments/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApartmentsRoute: typeof ApartmentsRoute
+  ApartmentsRoute: typeof ApartmentsRouteWithChildren
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   LocationsRoute: typeof LocationsRoute
@@ -116,12 +144,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apartments/$id': {
+      id: '/apartments/$id'
+      path: '/$id'
+      fullPath: '/apartments/$id'
+      preLoaderRoute: typeof ApartmentsIdRouteImport
+      parentRoute: typeof ApartmentsRoute
+    }
   }
 }
 
+interface ApartmentsRouteChildren {
+  ApartmentsIdRoute: typeof ApartmentsIdRoute
+}
+
+const ApartmentsRouteChildren: ApartmentsRouteChildren = {
+  ApartmentsIdRoute: ApartmentsIdRoute,
+}
+
+const ApartmentsRouteWithChildren = ApartmentsRoute._addFileChildren(
+  ApartmentsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApartmentsRoute: ApartmentsRoute,
+  ApartmentsRoute: ApartmentsRouteWithChildren,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   LocationsRoute: LocationsRoute,
