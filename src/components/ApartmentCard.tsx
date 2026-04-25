@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Wifi, Snowflake, Waves, BedDouble, MapPin } from "lucide-react";
 import { type Apartment, buildWhatsAppLink } from "@/data/apartments";
 
