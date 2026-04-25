@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookingBar } from "@/components/BookingBar";
-import { ApartmentGrid } from "@/components/ApartmentGrid";
+import { ApartmentCard } from "@/components/ApartmentCard";
 import { LOCATIONS, APARTMENTS, buildWhatsAppLink } from "@/data/apartments";
 import heroImg from "@/assets/hero-exterior.jpg";
 import { Star, ShieldCheck, Wifi, Waves } from "lucide-react";
