@@ -53,13 +53,12 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
             <span className="inline-flex items-center gap-1.5"><Waves className="w-4 h-4 text-gold" />Pool</span>
           )}
         </div>
-        <div className="mt-6 flex items-center justify-between">
-          <span className="font-display text-base font-bold text-primary">{apt.price}</span>
+        <div className="mt-6">
           <a
             href={buildWhatsAppLink({ apartment: apt.name, location: apt.location })}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-gold text-gold-foreground px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition"
+            className="w-full inline-flex items-center justify-center gap-2 bg-gold text-gold-foreground px-4 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition"
           >
             Book on WhatsApp
           </a>
