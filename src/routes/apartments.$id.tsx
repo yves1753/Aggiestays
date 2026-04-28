@@ -3,6 +3,60 @@ import { useState } from "react";
 import { APARTMENTS, buildWhatsAppLink } from "@/data/apartments";
 import { MapPin, BedDouble, Wifi, Snowflake, Waves, Check, ArrowLeft } from "lucide-react";
 
+function ApartmentBookingForm({ apartment, location }: { apartment: string; location: string }) {
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("2");
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    window.open(buildWhatsAppLink({ checkIn, checkOut, guests, apartment, location }), "_blank");
+  };
+
+  return (
+    <form onSubmit={submit} className="mt-5 space-y-4">
+      <div className="grid grid-cols-2 gap-3">
+        <div className="flex flex-col">
+          <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">Check-in</label>
+          <input
+            type="date"
+            value={checkIn}
+            onChange={(e) => setCheckIn(e.target.value)}
+            className="bg-transparent border-b border-border py-1.5 text-sm font-medium focus:outline-none focus:border-gold"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">Check-out</label>
+          <input
+            type="date"
+            value={checkOut}
+            onChange={(e) => setCheckOut(e.target.value)}
+            className="bg-transparent border-b border-border py-1.5 text-sm font-medium focus:outline-none focus:border-gold"
+          />
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">Guests</label>
+        <select
+          value={guests}
+          onChange={(e) => setGuests(e.target.value)}
+          className="bg-transparent border-b border-border py-1.5 text-sm font-medium focus:outline-none focus:border-gold"
+        >
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+            <option key={n} value={n}>{n} {n === 1 ? "Guest" : "Guests"}</option>
+          ))}
+        </select>
+      </div>
+      <button
+        type="submit"
+        className="w-full inline-flex items-center justify-center gap-2 bg-gold text-gold-foreground px-4 py-3 rounded-full text-sm font-semibold hover:opacity-90 transition"
+      >
+        Book on WhatsApp
+      </button>
+    </form>
+  );
+}
+
 export const Route = createFileRoute("/apartments/$id")({
   loader: ({ params }) => {
     const apt = APARTMENTS.find((a) => a.id === params.id);
@@ -144,16 +198,9 @@ function ApartmentDetail() {
           <div className="lg:sticky lg:top-24 bg-card border border-border/60 rounded-2xl p-6 shadow-luxe">
             <div className="font-display text-xl font-bold">Reserve this apartment</div>
             <p className="text-sm text-muted-foreground mt-2">
-              Send your dates instantly via WhatsApp — we'll confirm availability within minutes.
+              Pick your dates and we'll confirm availability via WhatsApp within minutes.
             </p>
-            <a
-              href={buildWhatsAppLink({ apartment: apt.name, location: apt.location })}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-gold text-gold-foreground px-4 py-3 rounded-full text-sm font-semibold hover:opacity-90 transition"
-            >
-              Book on WhatsApp
-            </a>
+            <ApartmentBookingForm apartment={apt.name} location={apt.location} />
             <div className="mt-5 pt-5 border-t border-border/60 text-xs text-muted-foreground space-y-1.5">
               <div className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-gold" /> Instant confirmation</div>
               <div className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-gold" /> No booking fees</div>
