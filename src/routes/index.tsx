@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookingBar } from "@/components/BookingBar";
 import { ApartmentCard } from "@/components/ApartmentCard";
 import { LOCATIONS, APARTMENTS, buildWhatsAppLink } from "@/data/apartments";
 import heroImg from "@/assets/hero-exterior.jpg";
@@ -59,13 +58,8 @@ function Index() {
         </div>
       </section>
 
-      {/* BOOKING BAR */}
-      <section className="container-luxe -mt-24 relative z-10">
-        <BookingBar />
-      </section>
-
       {/* LOCATIONS QUICK FILTER */}
-      <section className="container-luxe py-20">
+      <section className="container-luxe pt-28 pb-20">
         <div className="text-center mb-12">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Locations</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold mt-3">Find Your Stay</h2>
