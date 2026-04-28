@@ -12,8 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LocationsRouteImport } from './routes/locations'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as ApartmentsRouteImport } from './routes/apartments'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApartmentsIndexRouteImport } from './routes/apartments.index'
 import { Route as ApartmentsIdRouteImport } from './routes/apartments.$id'
 
 const LocationsRoute = LocationsRouteImport.update({
@@ -31,14 +31,14 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApartmentsRoute = ApartmentsRouteImport.update({
-  id: '/apartments',
-  path: '/apartments',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApartmentsIndexRoute = ApartmentsIndexRouteImport.update({
+  id: '/apartments/',
+  path: '/apartments/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApartmentsIdRoute = ApartmentsIdRouteImport.update({
@@ -49,62 +49,62 @@ const ApartmentsIdRoute = ApartmentsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/apartments': typeof ApartmentsRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/locations': typeof LocationsRoute
   '/apartments/$id': typeof ApartmentsIdRoute
+  '/apartments/': typeof ApartmentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/apartments': typeof ApartmentsRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/locations': typeof LocationsRoute
   '/apartments/$id': typeof ApartmentsIdRoute
+  '/apartments': typeof ApartmentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/apartments': typeof ApartmentsRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/locations': typeof LocationsRoute
   '/apartments/$id': typeof ApartmentsIdRoute
+  '/apartments/': typeof ApartmentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/apartments'
     | '/contact'
     | '/gallery'
     | '/locations'
     | '/apartments/$id'
+    | '/apartments/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/apartments'
     | '/contact'
     | '/gallery'
     | '/locations'
     | '/apartments/$id'
+    | '/apartments'
   id:
     | '__root__'
     | '/'
-    | '/apartments'
     | '/contact'
     | '/gallery'
     | '/locations'
     | '/apartments/$id'
+    | '/apartments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApartmentsRoute: typeof ApartmentsRouteWithChildren
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   LocationsRoute: typeof LocationsRoute
+  ApartmentsIndexRoute: typeof ApartmentsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -130,18 +130,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/apartments': {
-      id: '/apartments'
-      path: '/apartments'
-      fullPath: '/apartments'
-      preLoaderRoute: typeof ApartmentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apartments/': {
+      id: '/apartments/'
+      path: '/apartments'
+      fullPath: '/apartments/'
+      preLoaderRoute: typeof ApartmentsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apartments/$id': {
@@ -154,24 +154,12 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ApartmentsRouteChildren {
-  ApartmentsIdRoute: typeof ApartmentsIdRoute
-}
-
-const ApartmentsRouteChildren: ApartmentsRouteChildren = {
-  ApartmentsIdRoute: ApartmentsIdRoute,
-}
-
-const ApartmentsRouteWithChildren = ApartmentsRoute._addFileChildren(
-  ApartmentsRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApartmentsRoute: ApartmentsRouteWithChildren,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   LocationsRoute: LocationsRoute,
+  ApartmentsIndexRoute: ApartmentsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

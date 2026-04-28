@@ -7,7 +7,7 @@ const searchSchema = z.object({
   location: fallback(z.string(), "all").default("all"),
 });
 
-export const Route = createFileRoute("/apartments")({
+export const Route = createFileRoute("/apartments/")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
