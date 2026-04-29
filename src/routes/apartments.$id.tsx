@@ -137,6 +137,31 @@ function ApartmentDetail() {
         </div>
       </section>
 
+      {/* Photo gallery */}
+      {apt.photos && apt.photos.length > 0 && (
+        <section className="mb-12">
+          <h2 className="font-display text-2xl font-bold mb-4">Photos</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {apt.photos.map((src, i) => (
+              <a
+                key={src}
+                href={src}
+                target="_blank"
+                rel="noreferrer"
+                className="block aspect-[4/3] rounded-2xl overflow-hidden bg-muted shadow-soft group"
+              >
+                <img
+                  src={src}
+                  alt={`${apt.name} photo ${i + 1}`}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div className="grid gap-12 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-12">
           {/* Description */}

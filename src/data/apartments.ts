@@ -15,6 +15,7 @@ export type Apartment = {
   longDescription?: string;
   video: string;
   media: string[];
+  photos?: string[];
   features: string[];
   amenities: AmenityGroup[];
 };
@@ -179,6 +180,18 @@ export const APARTMENTS: Apartment[] = [
       "A modern 2-bedroom city apartment steps from Kijitonyama's shops and main roads. Bright, fully furnished and quiet despite the central location.",
     video: "/videos/kijitonyama.mp4",
     media: ["/videos/kijitonyama.mp4"],
+    photos: [
+      "/photos/kijitonyama-living-tv.jpg",
+      "/photos/kijitonyama-living.jpg",
+      "/photos/kijitonyama-kitchen.jpg",
+      "/photos/kijitonyama-dining.jpg",
+      "/photos/kijitonyama-bed1.jpg",
+      "/photos/kijitonyama-bed2.jpg",
+      "/photos/kijitonyama-bed3.jpg",
+      "/photos/kijitonyama-bed4.jpg",
+      "/photos/kijitonyama-hallway.jpg",
+      "/photos/kijitonyama-exterior.jpg",
+    ],
     features: ["2 Bedroom Apartment", ...COMMON_FEATURES],
     amenities: withExtras(),
   },
