@@ -238,6 +238,18 @@ export const APARTMENTS: Apartment[] = [
       "A spacious 3-bedroom duplex inside the upscale Morocco Square address. Two floors, full kitchen, and elegant living spaces — perfect for families or groups.",
     video: "/videos/morocco.mp4",
     media: ["/videos/morocco.mp4"],
+    photos: [
+      "/photos/morocco-living.jpg",
+      "/photos/morocco-bench.jpg",
+      "/photos/morocco-dining.jpg",
+      "/photos/morocco-kitchen.jpg",
+      "/photos/morocco-master.jpg",
+      "/photos/morocco-bed2.jpg",
+      "/photos/morocco-bed3.jpg",
+      "/photos/morocco-bathroom1.jpg",
+      "/photos/morocco-bathroom2.jpg",
+      "/photos/morocco-balcony.jpg",
+    ],
     features: ["3 Bedroom Duplex", ...COMMON_FEATURES],
     amenities: withExtras([
       { category: "Building", items: [{ name: "Elevator" }, { name: "24/7 concierge" }, { name: "Backup generator" }] },
