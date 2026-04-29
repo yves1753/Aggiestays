@@ -160,6 +160,18 @@ export const APARTMENTS: Apartment[] = [
       "Tucked away in the leafy Goba Lastanza neighborhood, this 2-bedroom ensuite residence pairs a private swimming pool with sunlit interiors, full kitchen and king-size beds — a calm escape minutes from the city.",
     video: "/videos/goba-2br.mp4",
     media: ["/videos/goba-2br.mp4", "/videos/goba-pool.mp4", "/videos/goba-lastanza.mp4", "/videos/goba-drone.mp4"],
+    photos: [
+      "/photos/goba-exterior.jpg",
+      "/photos/goba-garden.jpg",
+      "/photos/goba-pool1.jpg",
+      "/photos/goba-pool2.jpg",
+      "/photos/goba-loungers.jpg",
+      "/photos/goba-patio.jpg",
+      "/photos/goba-veranda.jpg",
+      "/photos/goba-outdoor-lounge.jpg",
+      "/photos/goba-bed1.jpg",
+      "/photos/goba-bed2.jpg",
+    ],
     features: ["2 Bedroom Ensuite", "Swimming pool included", ...COMMON_FEATURES],
     amenities: withExtras([
       { category: "Outdoor", items: [{ name: "Private swimming pool" }, { name: "Sun loungers" }] },
