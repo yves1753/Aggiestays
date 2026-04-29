@@ -269,6 +269,18 @@ export const APARTMENTS: Apartment[] = [
       "An elegant 3-bedroom apartment in the heart of Moshi town. Wake up to Kilimanjaro country views, then return to a fully equipped luxury home.",
     video: "/videos/moshi.mp4",
     media: ["/videos/moshi.mp4"],
+    photos: [
+      "/photos/moshi-living1.jpg",
+      "/photos/moshi-living2.jpg",
+      "/photos/moshi-kitchen1.jpg",
+      "/photos/moshi-kitchen2.jpg",
+      "/photos/moshi-dining.jpg",
+      "/photos/moshi-bed1.jpg",
+      "/photos/moshi-bed2.jpg",
+      "/photos/moshi-bed3.jpg",
+      "/photos/moshi-bed4.jpg",
+      "/photos/moshi-laundry.jpg",
+    ],
     features: ["3 Bedroom Apartment", ...COMMON_FEATURES],
     amenities: withExtras([
       { category: "Outdoor", items: [{ name: "Mountain views" }] },
