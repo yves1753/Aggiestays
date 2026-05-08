@@ -1,11 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { NavLink, Link } from "react-router-dom";
 import logo from "@/assets/logo.jpg";
 
 const NAV = [
-  { to: "/locations" as const, label: "Locations" },
-  { to: "/apartments" as const, label: "Apartments" },
-  { to: "/gallery" as const, label: "Gallery" },
-  { to: "/contact" as const, label: "Contact" },
+  { to: "/locations", label: "Locations" },
+  { to: "/apartments", label: "Apartments" },
+  { to: "/gallery", label: "Gallery" },
+  { to: "/contact", label: "Contact" },
 ];
 
 export function SiteHeader() {
@@ -24,14 +24,16 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden md:flex items-center gap-8">
           {NAV.map((n) => (
-            <Link
+            <NavLink
               key={n.to}
               to={n.to}
-              className="text-sm font-medium text-foreground/75 hover:text-gold transition-colors"
-              activeProps={{ className: "text-gold" }}
+              className={({ isActive }) =>
+                "text-sm font-medium transition-colors " +
+                (isActive ? "text-gold" : "text-foreground/75 hover:text-gold")
+              }
             >
               {n.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
         <a

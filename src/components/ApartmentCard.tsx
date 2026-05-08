@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Wifi, Snowflake, Waves, BedDouble, MapPin } from "lucide-react";
 import { type Apartment, buildWhatsAppLink } from "@/data/apartments";
 
@@ -19,6 +19,8 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
     }
   };
 
+  const detailHref = `/apartments/${apt.id}`;
+
   return (
     <article
       onMouseEnter={onEnter}
@@ -26,7 +28,7 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
       className="group bg-card rounded-2xl overflow-hidden shadow-soft card-lift hover:[&]:card-lift-hover border border-border/60"
       style={{ animation: "var(--animate-fade-up)" }}
     >
-      <Link to="/apartments/$id" params={{ id: apt.id }} className="block relative aspect-[4/3] overflow-hidden bg-muted">
+      <Link to={detailHref} className="block relative aspect-[4/3] overflow-hidden bg-muted">
         <video
           ref={ref}
           src={apt.video}
@@ -44,7 +46,7 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
         )}
       </Link>
       <div className="p-6">
-        <Link to="/apartments/$id" params={{ id: apt.id }} className="block">
+        <Link to={detailHref} className="block">
           <h3 className="font-display text-xl font-bold text-foreground hover:text-gold transition-colors">{apt.name}</h3>
         </Link>
         <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{apt.description}</p>
@@ -58,8 +60,7 @@ export function ApartmentCard({ apt }: { apt: Apartment }) {
         </div>
         <div className="mt-6 flex flex-col gap-2">
           <Link
-            to="/apartments/$id"
-            params={{ id: apt.id }}
+            to={detailHref}
             className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-4 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition"
           >
             View details & amenities
