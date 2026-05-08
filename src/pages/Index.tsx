@@ -1,31 +1,23 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { ApartmentCard } from "@/components/ApartmentCard";
 import { LOCATIONS, APARTMENTS, buildWhatsAppLink } from "@/data/apartments";
 import heroImg from "@/assets/hero-exterior.jpg";
 import { Star, ShieldCheck, Wifi, Waves } from "lucide-react";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Aggiestays — Luxury Apartments in Dar es Salaam & Moshi" },
-      { name: "description", content: "Book fully-furnished luxury apartments across Tanzania. Pools, AC, WiFi. Instant WhatsApp booking." },
-      { property: "og:title", content: "Aggiestays — Luxury Apartments in Tanzania" },
-      { property: "og:image", content: heroImg },
-    ],
-  }),
-  component: Index,
-});
-
-function Index() {
+export default function Index() {
   const featured = APARTMENTS.slice(0, 3);
   return (
     <>
-      {/* HERO */}
+      <Helmet>
+        <title>Aggiestays — Luxury Apartments in Dar es Salaam & Moshi</title>
+        <meta name="description" content="Book fully-furnished luxury apartments across Tanzania. Pools, AC, WiFi. Instant WhatsApp booking." />
+        <meta property="og:title" content="Aggiestays — Luxury Apartments in Tanzania" />
+        <meta property="og:image" content={heroImg} />
+      </Helmet>
+
       <section className="relative">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImg})` }}
-        />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImg})` }} />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-primary/70 to-primary/90" />
         <div className="relative container-luxe pt-24 pb-40 md:pt-32 md:pb-48">
           <div className="max-w-3xl" style={{ animation: "var(--animate-fade-up)" }}>
@@ -39,18 +31,10 @@ function Index() {
               Discover unparalleled luxury apartments crafted for comfort and style — fully furnished, instantly bookable.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                to="/apartments"
-                className="bg-gold text-gold-foreground px-8 py-3.5 rounded-full font-semibold hover:opacity-90 transition shadow-luxe"
-              >
+              <Link to="/apartments" className="bg-gold text-gold-foreground px-8 py-3.5 rounded-full font-semibold hover:opacity-90 transition shadow-luxe">
                 View Apartments
               </Link>
-              <a
-                href={buildWhatsAppLink({})}
-                target="_blank"
-                rel="noreferrer"
-                className="bg-primary-foreground/10 text-primary-foreground border border-primary-foreground/30 backdrop-blur px-8 py-3.5 rounded-full font-semibold hover:bg-primary-foreground/20 transition"
-              >
+              <a href={buildWhatsAppLink({})} target="_blank" rel="noreferrer" className="bg-primary-foreground/10 text-primary-foreground border border-primary-foreground/30 backdrop-blur px-8 py-3.5 rounded-full font-semibold hover:bg-primary-foreground/20 transition">
                 Book Now
               </a>
             </div>
@@ -58,7 +42,6 @@ function Index() {
         </div>
       </section>
 
-      {/* LOCATIONS QUICK FILTER */}
       <section className="container-luxe pt-28 pb-20">
         <div className="text-center mb-12">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Locations</span>
@@ -68,8 +51,7 @@ function Index() {
           {LOCATIONS.filter((l) => l.slug !== "all").map((loc) => (
             <Link
               key={loc.slug}
-              to="/apartments"
-              search={{ location: loc.slug }}
+              to={`/apartments?location=${loc.slug}`}
               className="group bg-card border border-border/60 rounded-2xl p-6 text-center card-lift hover:[&]:card-lift-hover hover:border-gold"
             >
               <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gold/15 text-gold flex items-center justify-center font-display text-lg font-bold">
@@ -81,7 +63,6 @@ function Index() {
         </div>
       </section>
 
-      {/* FEATURED APARTMENTS */}
       <section className="container-luxe pb-20">
         <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
           <div>
@@ -99,7 +80,6 @@ function Index() {
         </div>
       </section>
 
-      {/* WHY US */}
       <section className="bg-secondary/40 py-20">
         <div className="container-luxe grid gap-10 md:grid-cols-4 text-center">
           {[
@@ -119,7 +99,6 @@ function Index() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
       <section className="container-luxe py-20">
         <div className="text-center mb-12">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Guest Stories</span>

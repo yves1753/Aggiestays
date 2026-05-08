@@ -1,19 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { buildWhatsAppLink, APARTMENTS } from "@/data/apartments";
 import { MessageCircle, Phone, MapPin } from "lucide-react";
-
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact & Book — Aggiestays" },
-      { name: "description", content: "Book your luxury Tanzanian apartment via WhatsApp at +255 754 255 552." },
-      { property: "og:title", content: "Contact & Book — Aggiestays" },
-      { property: "og:description", content: "Book your luxury Tanzanian apartment via WhatsApp." },
-    ],
-  }),
-  component: ContactPage,
-});
 
 const FAQS = [
   { q: "How do I book and pay?", a: "Click any 'Book on WhatsApp' button or send the form. We confirm availability instantly and share payment details (mobile money or bank transfer)." },
@@ -22,7 +10,7 @@ const FAQS = [
   { q: "Are pets and parties allowed?", a: "Quiet enjoyment is required. No parties. Pets only by prior arrangement." },
 ];
 
-function ContactPage() {
+export default function ContactPage() {
   const [form, setForm] = useState({ name: "", phone: "", checkIn: "", checkOut: "", guests: "2", apartment: "" });
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -38,6 +26,10 @@ function ContactPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Contact & Book — Aggiestays</title>
+        <meta name="description" content="Book your luxury Tanzanian apartment via WhatsApp at +255 754 255 552." />
+      </Helmet>
       <section className="container-luxe py-16 grid gap-12 lg:grid-cols-2">
         <div>
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Get in touch</span>
@@ -117,10 +109,7 @@ function ContactPage() {
         <div className="max-w-3xl mx-auto space-y-3">
           {FAQS.map((f, i) => (
             <div key={i} className="bg-card border border-border/60 rounded-2xl overflow-hidden">
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 text-left font-semibold"
-              >
+              <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between p-5 text-left font-semibold">
                 {f.q}
                 <span className="text-gold text-xl">{openFaq === i ? "−" : "+"}</span>
               </button>
