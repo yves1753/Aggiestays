@@ -17,7 +17,10 @@ export default function LocationsPage() {
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {LOCATIONS.filter((l) => l.slug !== "all").map((loc) => {
-            const count = APARTMENTS.filter((a) => a.locationSlug === loc.slug).length;
+            const count =
+              "totalApartments" in loc && typeof loc.totalApartments === "number"
+                ? loc.totalApartments
+                : APARTMENTS.filter((a) => a.locationSlug === loc.slug).length;
             return (
               <Link
                 key={loc.slug}
