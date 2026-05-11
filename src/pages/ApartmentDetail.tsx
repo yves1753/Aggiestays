@@ -4,6 +4,39 @@ import { useState } from "react";
 import { APARTMENTS, buildWhatsAppLink } from "@/data/apartments";
 import { MapPin, BedDouble, Wifi, Snowflake, Waves, Check, ArrowLeft } from "lucide-react";
 
+type PhotoGroup = {
+  title: string;
+  photos: { src: string; index: number }[];
+};
+
+const PHOTO_GROUP_RULES: { title: string; keywords: string[] }[] = [
+  { title: "Living room", keywords: ["living", "lounge", "sofa", "tv-room", "sitting"] },
+  { title: "Kitchen", keywords: ["kitchen", "dining", "island", "sink", "fridge"] },
+  { title: "Bedroom", keywords: ["bed", "bedroom", "master"] },
+  { title: "Bathroom", keywords: ["bath", "bathroom", "toilet", "shower", "washroom"] },
+  { title: "Exterior", keywords: ["exterior", "outside", "entrance", "garden", "balcony", "patio", "veranda", "yard", "drone"] },
+  { title: "Pool area", keywords: ["pool", "loungers", "poolside"] },
+];
+
+function buildPhotoGroups(photos: string[], hasPool: boolean): PhotoGroup[] {
+  const grouped = new Map<string, { src: string; index: number }[]>();
+  const order = PHOTO_GROUP_RULES.map((rule) => rule.title);
+
+  photos.forEach((src, index) => {
+    const name = src.toLowerCase();
+    const matched = PHOTO_GROUP_RULES.find((rule) => rule.keywords.some((kw) => name.includes(kw)));
+    const title = matched ? matched.title : "Additional";
+    if (!grouped.has(title)) grouped.set(title, []);
+    grouped.get(title)!.push({ src, index });
+  });
+
+  const preferredOrder = hasPool ? [...order, "Additional"] : order.filter((title) => title !== "Pool area").concat("Additional");
+
+  return preferredOrder
+    .filter((title) => grouped.has(title))
+    .map((title) => ({ title, photos: grouped.get(title)! }));
+}
+
 function ApartmentBookingForm({ apartment, location }: { apartment: string; location: string }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
@@ -57,6 +90,7 @@ export default function ApartmentDetail() {
   }
 
   const visibleAmenities = showAll ? apt.amenities : apt.amenities.slice(0, 4);
+  const photoGroups = apt.photos ? buildPhotoGroups(apt.photos, apt.hasPool) : [];
 
   return (
     <>
@@ -105,11 +139,31 @@ export default function ApartmentDetail() {
         {apt.photos && apt.photos.length > 0 && (
           <section className="mb-12">
             <h2 className="font-display text-2xl font-bold mb-4">Photos</h2>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {apt.photos.map((src: string, i: number) => (
-                <a key={src} href={src} target="_blank" rel="noreferrer" className="block aspect-[4/3] rounded-2xl overflow-hidden bg-muted shadow-soft group">
-                  <img src={src} alt={`${apt.name} photo ${i + 1}`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                </a>
+            <div className="space-y-8">
+              {photoGroups.map((group) => (
+                <div key={group.title}>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                    {group.title} ({group.photos.length})
+                  </h3>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    {group.photos.map(({ src, index }) => (
+                      <a
+                        key={src}
+                        href={src}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block aspect-[4/3] rounded-2xl overflow-hidden bg-muted shadow-soft group"
+                      >
+                        <img
+                          src={src}
+                          alt={`${apt.name} ${group.title} photo ${index + 1}`}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </section>
