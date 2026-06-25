@@ -118,21 +118,40 @@ export default function ApartmentDetail() {
 
         <section className="grid gap-3 md:grid-cols-4 mb-12">
           <div className="md:col-span-3 aspect-video rounded-2xl overflow-hidden bg-muted shadow-soft">
-            <video key={apt.media[active]} src={apt.media[active]} controls autoPlay muted playsInline className="w-full h-full object-cover" />
+            <video
+              key={apt.media[active]}
+              src={apt.media[active]}
+              poster={"/posters/" + (apt.media[active].split("/").pop() || "").replace(/\.mp4$/, ".webp")}
+              controls
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div className="md:col-span-1 grid grid-cols-4 md:grid-cols-1 gap-3">
-            {apt.media.map((m: string, i: number) => (
-              <button
-                key={m}
-                onClick={() => setActive(i)}
-                className={
-                  "aspect-video rounded-xl overflow-hidden bg-muted border-2 transition " +
-                  (i === active ? "border-gold" : "border-transparent hover:border-border")
-                }
-              >
-                <video src={m} muted playsInline preload="metadata" className="w-full h-full object-cover pointer-events-none" />
-              </button>
-            ))}
+            {apt.media.map((m: string, i: number) => {
+              const poster = "/posters/" + (m.split("/").pop() || "").replace(/\.mp4$/, ".webp");
+              return (
+                <button
+                  key={m}
+                  onClick={() => setActive(i)}
+                  className={
+                    "aspect-video rounded-xl overflow-hidden bg-muted border-2 transition relative " +
+                    (i === active ? "border-gold" : "border-transparent hover:border-border")
+                  }
+                >
+                  <img
+                    src={poster}
+                    alt={`Video ${i + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover pointer-events-none"
+                  />
+                </button>
+              );
+            })}
           </div>
         </section>
 

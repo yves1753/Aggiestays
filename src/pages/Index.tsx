@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ApartmentCard } from "@/components/ApartmentCard";
 import { LOCATIONS, APARTMENTS, buildWhatsAppLink } from "@/data/apartments";
-import heroImg from "@/assets/hero-exterior.jpg";
+import heroImg from "@/assets/hero-exterior.webp";
 import { Star, ShieldCheck, Wifi, Waves } from "lucide-react";
 
 export default function Index() {
