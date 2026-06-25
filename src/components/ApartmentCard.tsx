@@ -1,49 +1,30 @@
-import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Wifi, Snowflake, Waves, BedDouble, MapPin } from "lucide-react";
 import { type Apartment, buildWhatsAppLink } from "@/data/apartments";
 
 export function ApartmentCard({ apt }: { apt: Apartment }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [hover, setHover] = useState(false);
-
-  const onEnter = () => {
-    setHover(true);
-    ref.current?.play().catch(() => {});
-  };
-  const onLeave = () => {
-    setHover(false);
-    if (ref.current) {
-      ref.current.pause();
-      ref.current.currentTime = 0;
-    }
-  };
-
   const detailHref = `/apartments/${apt.id}`;
+  const thumbnail = apt.photos?.[0];
 
   return (
     <article
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
       className="group bg-card rounded-2xl overflow-hidden shadow-soft card-lift hover:[&]:card-lift-hover border border-border/60"
       style={{ animation: "var(--animate-fade-up)" }}
     >
       <Link to={detailHref} className="block relative aspect-[4/3] overflow-hidden bg-muted">
-        <video
-          ref={ref}
-          src={apt.video}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+        {thumbnail && (
+          <img
+            src={thumbnail}
+            alt={apt.name}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        )}
         <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-primary/85 backdrop-blur text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
           <MapPin className="w-3.5 h-3.5" /> {apt.location}
         </div>
-        {!hover && (
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent pointer-events-none" />
-        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent pointer-events-none" />
       </Link>
       <div className="p-6">
         <Link to={detailHref} className="block">
